@@ -6,17 +6,18 @@ def good_reads(search_term)
   greads = open("https://www.elefant.ro/search?SearchTerm=#{search_term}").read
   doc = Nokogiri::HTML(greads)
   doc.search('.product-list-item').each_with_index do |element, index|
-   puts index + 1
    address = element.attributes['data-action'].value
    newone = open(address).read
    doc1 = Nokogiri::HTML(newone)
-   p doc1.search('.product-manufacturer').children.text.strip
+   title = doc1.search('.product-title').children.text.strip
+   author = doc1.search('.product-manufacturer').children.text.strip
+   puts "#{index + 1}. #{author} -- #{title}"
 
   end
 
 end
 
-good_reads("ewan")
+good_reads("kindle")
 
 # html_content = open('https://www.etsy.com/search?q=wallet').read
 # doc = Nokogiri::HTML(html_content)
