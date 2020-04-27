@@ -3,6 +3,7 @@ require "nokogiri"
 
 def good_reads(search_term)
   # TODO: return an array of Antiques found of Craigslist for this `city`.
+  elefant_books = {}
   greads = open("https://www.elefant.ro/search?SearchTerm=#{search_term}").read
   doc = Nokogiri::HTML(greads)
   doc.search('.product-list-item').each_with_index do |element, index|
@@ -12,11 +13,15 @@ def good_reads(search_term)
     title = doc1.search('.product-title').children.text.strip
     author = doc1.search('.product-manufacturer').children.text.strip
     price = doc1.search('.current-price.sale-price').children.text.strip
-    puts "#{index + 1}. #{author} -- #{title} -- #{price}"
+     puts "#{index + 1}. #{author} -- #{title} -- #{price}"
+
+    elefant_books[title] = author
+
   end
+  puts elefant_books
 end
 
-good_reads("mircea cartarescu")
+good_reads("masca")
 
 # html_content = open('https://www.etsy.com/search?q=wallet').read
 # doc = Nokogiri::HTML(html_content)
